@@ -72,3 +72,9 @@ filter: brightness(0) invert(1);
   font-weight: bold;
   color: white;
 }
+.icone-meteo svg {
+  width: 160px;
+  height: 160px;
+  display: block;
+  margin: 0 auto 10px;
+}
