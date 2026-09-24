@@ -30,4 +30,18 @@ p {
 
 .previsions h2 {
   color: #4da6ff;
+}.carte-meteo {
+  margin: 20px auto;
+  max-width: 800px;
+  min-height: 450px;
+  background-color: #e8f1f8;
+  border-radius: 15px;
+  padding: 20px;
+  color: #0b1830;
+  box-sizing: border-box;
+}
+
+.carte-meteo h3 {
+  font-size: 28px;
+  margin-top: 10px;
 }
