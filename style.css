@@ -20,3 +20,14 @@ h2 {
 p {
   font-size: 18px;
 }
+.previsions {
+  margin: 35px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #13294b;
+  border-radius: 12px;
+}
+
+.previsions h2 {
+  color: #4da6ff;
+}
