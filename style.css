@@ -53,4 +53,22 @@ p {
   margin: 20px auto;
   border-radius: 12px;
 filter: brightness(0) invert(1);
+}.icone-meteo {
+  display: inline-block;
+  text-align: center;
+  margin: 20px;
+}
+
+.icone-meteo img {
+  width: 160px;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.icone-meteo p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
 }
