@@ -112,3 +112,31 @@ print(
     f"Longitude : {longitude.min():.2f}° → "
     f"{longitude.max():.2f}°"
 )
+import json
+
+# 📡 Sortie du modèle
+forecast_data = {
+    "model": "Maximmeteo Model",
+    "version": "V0.3",
+    "resolution_km": dx / 1000,
+    "grid": {
+        "nx": nx,
+        "ny": ny
+    },
+    "domain": {
+        "center_lat": center_lat,
+        "center_lon": center_lon
+    },
+    "initial_state": {
+        "temperature_mean": float(temperature.mean()),
+        "pressure_mean": float(pressure.mean()),
+        "humidity_mean": float(humidity.mean())
+    }
+}
+
+# 💾 Création du fichier JSON
+with open("forecast.json", "w", encoding="utf-8") as file:
+    json.dump(forecast_data, file, indent=2, ensure_ascii=False)
+
+print("\n📡 Sortie créée : forecast.json")
+print("✅ Données Maximmeteo prêtes à être utilisées par le site")
