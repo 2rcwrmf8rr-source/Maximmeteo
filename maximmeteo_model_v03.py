@@ -62,6 +62,10 @@ n = (
         np.tan(np.pi / 4 + lat2 / 2)
         /
         np.tan(np.pi / 4 + lat1 / 2)
+        omega = 7.2921159e-5  # vitesse angulaire de rotation terrestre (rad/s)
+
+latitude_rad = np.deg2rad(LAT)
+f = 2.0 * omega * np.sin(latitude_rad)
     )
 )
 
@@ -140,3 +144,41 @@ with open("forecast.json", "w", encoding="utf-8") as file:
 
 print("\n📡 Sortie créée : forecast.json")
 print("✅ Données Maximmeteo prêtes à être utilisées par le site")
+cor_u = f * wind_v
+cor_v = -f * wind_u
+
+wind_u += dt * cor_u
+wind_v += dt * cor_v
+print("\n=== TEST DE STABILITÉ V0.7 — 48 H ===")
+
+wind_speed = np.sqrt(wind_u**2 + wind_v**2)
+
+print(f"Vent min : {wind_speed.min():.2f} m/s")
+print(f"Vent max : {wind_speed.max():.2f} m/s")
+
+print(f"Pression min : {pressure.min():.2f} hPa")
+print(f"Pression max : {pressure.max():.2f} hPa")
+
+print(f"Température min : {temperature.min():.2f} °C")
+print(f"Température max : {temperature.max():.2f} °C")
+
+print(f"Humidité min : {humidity.min():.2f} %")
+print(f"Humidité max : {humidity.max():.2f} %")
+
+# Vérification des valeurs non finies
+if not np.isfinite(wind_u).all():
+    print("⚠️ Instabilité détectée dans wind_u")
+
+if not np.isfinite(wind_v).all():
+    print("⚠️ Instabilité détectée dans wind_v")
+
+if not np.isfinite(pressure).all():
+    print("⚠️ Instabilité détectée dans pressure")
+
+if not np.isfinite(temperature).all():
+    print("⚠️ Instabilité détectée dans temperature")
+
+if not np.isfinite(humidity).all():
+    print("⚠️ Instabilité détectée dans humidity")
+
+print("=== FIN DU TEST ===")
