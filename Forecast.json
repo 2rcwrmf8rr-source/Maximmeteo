@@ -1,0 +1,18 @@
+{
+  "model": "Maximmeteo Model",
+  "version": "V0.3",
+  "resolution_km": 5.0,
+  "grid": {
+    "nx": 201,
+    "ny": 201
+  },
+  "domain": {
+    "center_lat": 46.5,
+    "center_lon": 2.5
+  },
+  "initial_state": {
+    "temperature_mean": 15.0,
+    "pressure_mean": 1013.25,
+    "humidity_mean": 70.0
+  }
+}
