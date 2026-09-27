@@ -35,3 +35,16 @@ forecast_seconds = forecast_hours * 3600
 
 # 🔢 Nombre de pas de temps
 n_steps = int(forecast_seconds / dt)
+# 💧 Advection de l'humidité
+dq_dx = np.gradient(humidity, dx, axis=1)
+dq_dy = np.gradient(humidity, dy, axis=0)
+advection_humidity = (
+        wind_u * dq_dx +
+        wind_v * dq_dy
+    )
+
+    humidity -= dt * advection_humidity
+
+    # 💧 Limitation de l'humidité
+    humidity = np.clip(humidity, 0.0, 100.0)
+
