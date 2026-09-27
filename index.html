@@ -1,63 +1,24 @@
-index
-<p>Bienvenue sur la plateforme météo de Maximmeteo !</p>
-<nav class="menu">
-  <a href="#">🗺️ Prévisions</a>
-  <a href="#">🌡️ Températures</a>
-  <a href="#">💨 Vent</a>
-  
-</nav> <!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maximmeteo</title>
-</head>
-  <link rel="stylesheet" href="style.css">
-  
-
-<body>
-
-  <h1>🌦️ Maximmeteo</h1>
-  <h2>Prévisions météorologiques</h2>
-  <p>Bienvenue sur la plateforme météo de Maximmeteo !</p>
-
-</body>
-</html>
-<section class="previsions">
-  <h2>🗺️ Prévisions météo</h2>
-  <p>Les prévisions météorologiques de Maximmeteo.</p>
-</section>
-<div class="carte-meteo">
-  <h3>France</h3>
-  <p>  <p>Prévisions France 🇫🇷</p>
-</div>
-<img
-
-<div class="icone-meteo">
-<img src="icone-ensoleille.png" alt="Ensoleillé" class="icone-meteo">
-<div class="icone-meteo">
-  <svg viewBox="0 0 200 200" aria-label="Ensoleillé">
-    <g stroke="#ffb300" stroke-width="8" stroke-linecap="round">
-      <line x1="100" y1="15" x2="100" y2="40"/>
-      <line x1="100" y1="160" x2="100" y2="185"/>
-      <line x1="15" y1="100" x2="40" y2="100"/>
-      <line x1="160" y1="100" x2="185" y2="100"/>
-      <line x1="40" y1="40" x2="58" y2="58"/>
-      <line x1="142" y1="142" x2="160" y2="160"/>
-      <line x1="160" y1="40" x2="142" y2="58"/>
-      <line x1="58" y1="142" x2="40" y2="160"/>
-    </g>
-
-    <circle cx="100" cy="100" r="55"
-            fill="#ffd21c"
-            stroke="#ff9f0a"
-            stroke-width="6"/>
-  </svg>
-
-  <p>Ensoleillé</p>
-</div>
+<div id="donnees-modele">
+  <h3>🌦️ Maximmeteo Model V0.3</h3>
+  <p>Chargement des données du modèle...</p>
 </div>
 
-<img src="https://raw.githubusercontent.com/regisenguehard/carte-france-svg/master/france-region-departement-metropolitaine-svg.svg"
-     alt="Carte de France avec les départements"
-     class="carte-france">
+<script>
+fetch("forecast.json")
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("donnees-modele").innerHTML = `
+      <h3>🌦️ ${data.model}</h3>
+      <p>Version : ${data.version}</p>
+      <p>Maille : ${data.resolution_km} km</p>
+      <p>Grille : ${data.grid.nx} × ${data.grid.ny}</p>
+      <p>Température moyenne : ${data.initial_state.temperature_mean.toFixed(1)} °C</p>
+      <p>Pression moyenne : ${data.initial_state.pressure_mean.toFixed(2)} hPa</p>
+      <p>Humidité moyenne : ${data.initial_state.humidity_mean.toFixed(1)} %</p>
+    `;
+  })
+  .catch(error => {
+    document.getElementById("donnees-modele").innerHTML =
+      "<p>⚠️ Impossible de charger les données du modèle.</p>";
+  });
+</script>
