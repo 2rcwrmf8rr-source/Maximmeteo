@@ -48,3 +48,11 @@
     </div>
 </main>
 <svg id="carte-svg" viewBox="0 0 900 700"></svg>
+
+<rect
+    x="300"
+    y="200"
+    width="200"
+    height="150"
+    class="test-departement">
+</rect>
