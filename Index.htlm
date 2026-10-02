@@ -235,3 +235,79 @@ VERT / JAUNE / ORANGE / ROUGE
     <button id="appliquer">Appliquer</button>
 
 </div> 
+
+#controle {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #0002;
+}
+
+#controle h2 {
+    margin-top: 0;
+}
+
+#controle label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+#controle select,
+#controle button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+#controle button {
+    margin-top: 18px;
+    cursor: pointer;
+    border: none;
+}
+const selectDepartement = document.getElementById("departement");
+
+departements.forEach(departement => {
+
+    const code = departement.properties.code;
+    const nom = departement.properties.nom;
+
+    const option = document.createElement("option");
+
+    option.value = code;
+    option.textContent = `${code} - ${nom}`;
+
+    selectDepartement.appendChild(option);
+});
+
+document.getElementById("appliquer").addEventListener("click", () => {
+
+    const code = document.getElementById("departement").value;
+    const phenomene = document.getElementById("phenomene").value;
+    const niveau = document.getElementById("niveau").value;
+
+    if (!code) {
+        alert("Choisis d'abord un département.");
+        return;
+    }
+
+    // Modification de la vigilance
+    vigilance[code][phenomene] = niveau;
+
+    // Actualisation de la carte
+    d3.selectAll(".departement")
+        .attr("class", departement => {
+
+            const codeDepartement = departement.properties.code;
+
+            return "departement " +
+                   vigilance[codeDepartement].orages;
+
+        });
+
+});
