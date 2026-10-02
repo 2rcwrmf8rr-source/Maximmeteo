@@ -47,3 +47,4 @@
         </div>
     </div>
 </main>
+<svg id="carte-svg" viewBox="0 0 900 700"></svg>
