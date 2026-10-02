@@ -1,2 +1,0 @@
-console.log("Carte météo chargée !");
-console.log("🌦️ Ma carte météo fonctionne !");
