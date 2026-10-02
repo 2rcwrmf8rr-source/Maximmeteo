@@ -1,0 +1,26 @@
+main {
+    padding: 20px;
+}
+
+#carte-container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+#carte {
+    min-height: 500px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+#carte-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
