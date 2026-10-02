@@ -308,6 +308,200 @@ document.getElementById("appliquer").addEventListener("click", () => {
             return "departement " +
                    vigilance[codeDepartement].orages;
 
+<script>
+
+const infos = document.getElementById("infos");
+
+let departements = [];
+let vigilance = {};
+
+fetch("https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson")
+.then(reponse => reponse.json())
+.then(geojson => {
+
+    // 🇫🇷 France métropolitaine uniquement
+    departements = geojson.features.filter(departement => {
+
+        const code = departement.properties.code;
+
+        return !["971", "972", "973", "974", "976"].includes(code);
+    });
+
+    // Crée automatiquement la vigilance de chaque département
+    departements.forEach(departement => {
+
+        const code = departement.properties.code;
+
+        vigilance[code] = {
+            orages: "vert",
+            pluie_inondation: "vert",
+            vent: "vert",
+            crues: "vert",
+            neige_verglas: "vert",
+            canicule: "vert",
+            grand_froid: "vert",
+            vagues_submersion: "vert"
+        };
+
+    });
+
+
+    // Quelques tests
+    vigilance["35"].orages = "orange";
+    vigilance["29"].vent = "jaune";
+    vigilance["44"].pluie_inondation = "orange";
+
+
+    // Remplissage du menu des départements
+    const selectDepartement =
+        document.getElementById("departement");
+
+    departements
+        .sort((a, b) =>
+            a.properties.code.localeCompare(
+                b.properties.code,
+                "fr",
+                {numeric: true}
+            )
+        )
+        .forEach(departement => {
+
+            const option = document.createElement("option");
+
+            option.value = departement.properties.code;
+
+            option.textContent =
+                `${departement.properties.code} - ${departement.properties.nom}`;
+
+            selectDepartement.appendChild(option);
+
+        });
+
+
+    // Création de la carte
+    const projection = d3.geoMercator()
+        .fitSize(
+            [900, 700],
+            {
+                type: "FeatureCollection",
+                features: departements
+            }
+        );
+
+
+    const chemin = d3.geoPath()
+        .projection(projection);
+
+
+    d3.select("#carte")
+        .selectAll(".departement")
+        .data(departements)
+        .enter()
+        .append("path")
+        .attr("class", departement => {
+
+            const code = departement.properties.code;
+
+            return "departement " +
+                   vigilance[code].orages;
+
+        })
+        .attr("d", chemin)
+
+        .on("click", function(event, departement) {
+
+            const code = departement.properties.code;
+            const nom = departement.properties.nom;
+
+            infos.innerHTML = `
+                <h2>${nom}</h2>
+                <p><strong>Code :</strong> ${code}</p>
+                <p>🌩️ Orages : ${vigilance[code].orages}</p>
+                <p>🌧️ Pluie-inondation : ${vigilance[code].pluie_inondation}</p>
+                <p>💨 Vent : ${vigilance[code].vent}</p>
+                <p>🌊 Crues : ${vigilance[code].crues}</p>
+                <p>❄️ Neige-verglas : ${vigilance[code].neige_verglas}</p>
+                <p>🥵 Canicule : ${vigilance[code].canicule}</p>
+                <p>🥶 Grand froid : ${vigilance[code].grand_froid}</p>
+                <p>🌊 Vagues-submersion : ${vigilance[code].vagues_submersion}</p>
+            `;
+
+        });
+
+
+    // Bouton APPLIQUER
+    document.getElementById("appliquer")
+        .addEventListener("click", function() {
+
+            const code =
+                document.getElementById("departement").value;
+
+            const phenomene =
+                document.getElementById("phenomene").value;
+
+            const niveau =
+                document.getElementById("niveau").value;
+
+
+            if (!code) {
+
+                alert("Choisis un département.");
+
+                return;
+            }
+
+
+            // Modification
+            vigilance[code][phenomene] = niveau;
+
+
+            // Pour l'instant la carte affiche les ORAGES
+            d3.selectAll(".departement")
+                .attr("class", departement => {
+
+                    const codeDepartement =
+                        departement.properties.code;
+
+                    return "departement " +
+                           vigilance[codeDepartement].orages;
+
+                });
+
+
+            console.log(
+                "Modification :",
+                code,
+                phenomene,
+                niveau
+            );
+
+        });
+
+})
+.catch(erreur => {
+
+    console.error("Erreur :", erreur);
+
+    infos.innerHTML = `
+        <h2>❌ Erreur</h2>
+        <p>Impossible de charger la carte.</p>
+    `;
+
+});
+
+</script>
+
         });
 
 });
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+<select id="departement">
+
+<select id="phenomene">
+
+<select id="niveau">
+
+
+<button id="appliquer">Appliquer</button>
