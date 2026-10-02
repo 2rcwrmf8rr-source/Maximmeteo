@@ -33,9 +33,8 @@
         <h1>🌦️ Carte de vigilance météo</h1>
         <p>France métropolitaine</p>
     </header>
-
+<script src="script.js"></script>
 </body>
-
 </html>
 
 <main>
