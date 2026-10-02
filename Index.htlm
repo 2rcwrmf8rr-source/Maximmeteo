@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vigilance météo</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef3f7;
+        }
+
+        header {
+            background: #17324d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🌦️ Carte de vigilance météo</h1>
+        <p>France métropolitaine</p>
+    </header>
+
+</body>
+
+</html>
+
+<main>
+    <div id="carte-container">
+        <h2>Carte de vigilance</h2>
+
+        <div id="carte">
+            
+        </div>
+    </div>
+</main>
